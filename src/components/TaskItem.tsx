@@ -148,7 +148,7 @@ export function TaskItem({ task, onDo, onEdit, onDelete, onRestore }: TaskItemPr
             </h3>
           </div>
 
-          <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="flex items-center gap-2 opacity-100 2xl:opacity-0 2xl:group-hover:opacity-100 transition-opacity">
             {!isCompleted && onDo && dueToday && (
               <button 
                 onClick={() => onDo(task)}
