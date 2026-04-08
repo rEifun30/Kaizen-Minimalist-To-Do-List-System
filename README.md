@@ -139,7 +139,8 @@ src/
 │   ├── useAuth.ts          # Supabase auth state management
 │   └── useTasks.ts         # Task CRUD with cloud/local sync
 ├── lib/
-│   └── taskUtils.ts        # Scheduling & constraint logic
+│   ├── taskUtils.ts        # Scheduling & constraint logic
+│   └── utils.ts            # General utility functions
 ├── utils/
 │   └── supabase.ts         # Supabase browser client
 ├── types.ts                # TypeScript type definitions
