@@ -6,6 +6,21 @@
 
 ---
 
+## Screenshots
+
+<div align="center">
+  <img src="assets/images/1.png" alt="Splash Screen" width="800" />
+  <p><em>Animated splash screen with sakura bloom</em></p>
+
+  <img src="assets/images/2.png" alt="Main App" width="800" />
+  <p><em>Clean, distraction-free task dashboard with guest sync option</em></p>
+
+  <img src="assets/images/3.png" alt="Task Creation" width="800" />
+  <p><em>Guided 3-step task creation flow</em></p>
+</div>
+
+---
+
 ## Overview
 
 Kaizen is an intelligent to-do list application designed to automate daily planning using productivity heuristics. Inspired by the philosophy of continuous improvement (*改善*), Kaizen reduces decision fatigue by automatically scheduling tasks based on priority, deadlines, and adaptive repetition rules.
@@ -63,8 +78,8 @@ Sign up anytime to sync your tasks across devices. Guest sessions can be upgrade
 
 1. Clone the repository:
    ```bash
-   git clone <repo-url>
-   cd Kaizen-A-practical-productive-to-do-list
+   git clone https://github.com/rEifun30/Kaizen-Minimalist-To-Do-List-System.git
+   cd Kaizen-Minimalist-To-Do-List-System
    ```
 
 2. Install dependencies:
