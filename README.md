@@ -10,13 +10,13 @@
 
 <div align="center">
   <img src="assets/images/1.png" alt="Splash Screen" width="800" />
-  <p><em>Animated splash screen with sakura bloom</em></p>
+
 
   <img src="assets/images/2.png" alt="Main App" width="800" />
-  <p><em>Clean, distraction-free task dashboard with guest sync option</em></p>
+  
 
   <img src="assets/images/3.png" alt="Task Creation" width="800" />
-  <p><em>Guided 3-step task creation flow</em></p>
+
 </div>
 
 ---
