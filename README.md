@@ -17,6 +17,9 @@
 
   <img src="assets/images/3.png" alt="Task Creation" width="800" />
 
+
+  <img src="assets/images/4.png" alt="Pomodoro Timer" width="800" />
+
 </div>
 
 ---

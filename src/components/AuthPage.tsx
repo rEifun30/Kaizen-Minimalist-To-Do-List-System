@@ -30,10 +30,9 @@ export function AuthPage({ onAuthSuccess }: AuthPageProps) {
 
     if (err) {
       setError(err.message);
-    } else if (isLogin) {
-      onAuthSuccess?.();
     } else {
-      setSuccessMessage('Account created! Check your email to verify, then log in.');
+      // Login and Signup both go straight in
+      onAuthSuccess?.();
     }
   };
 
