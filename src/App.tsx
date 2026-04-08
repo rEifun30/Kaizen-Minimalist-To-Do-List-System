@@ -271,7 +271,8 @@ export default function App() {
   return (
     <>
       {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
-      <MainApp isGuest={!user} />
+      {/* Only render MainApp after splash is done to prevent background rendering */}
+      {!showSplash && <MainApp isGuest={!user} />}
     </>
   );
 }
