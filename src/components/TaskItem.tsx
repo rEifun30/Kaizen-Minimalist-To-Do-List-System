@@ -24,9 +24,35 @@ export function TaskItem({ task, onDo, onEdit, onDelete, onRestore }: TaskItemPr
   const overdue = isTaskOverdue(task);
   const dueToday = isTaskDueToday(task);
   const isConstrained = task.constraintFlag && !isCompleted;
-  
+
+  // Calculate overdue and urgency details
   let dueText = '';
-  if (!isCompleted) {
+  let overdueDays = 0;
+  let isDueSoon = false;
+  let dueSoonDays = 0;
+
+  if (!isCompleted && task.deadline) {
+    const deadlineDate = startOfDay(parseISO(task.deadline));
+    const today = startOfDay(new Date());
+    const diffDays = differenceInDays(deadlineDate, today);
+
+    if (overdue) {
+      overdueDays = Math.abs(diffDays);
+      dueText = `OVERDUE by ${overdueDays} day${overdueDays > 1 ? 's' : ''}`;
+    } else if (isConstrained) {
+      dueText = 'MUST DO TODAY';
+    } else if (task.priority === 'high' && diffDays > 0 && diffDays <= 3) {
+      // High priority early warning
+      isDueSoon = true;
+      dueSoonDays = diffDays;
+      dueText = `Due soon (Overdue in ${dueSoonDays} day${dueSoonDays > 1 ? 's' : ''})`;
+    } else if (dueToday) {
+      dueText = 'TODAY';
+    } else {
+      const days = differenceInDays(startOfDay(parseISO(task.nextScheduleDate)), startOfDay(new Date()));
+      dueText = `In ${days} day${days > 1 ? 's' : ''}`;
+    }
+  } else if (!isCompleted) {
     if (overdue) {
       dueText = 'OVERDUE';
     } else if (isConstrained) {
@@ -133,9 +159,12 @@ export function TaskItem({ task, onDo, onEdit, onDelete, onRestore }: TaskItemPr
               {!isCompleted && (
                 <span className={cn(
                   "text-xs font-medium tracking-wider flex items-center gap-1",
-                  overdue || isConstrained ? "text-red-500" : "text-white/40"
+                  overdue ? "text-red-500" :
+                  isDueSoon ? "text-orange-400" :
+                  isConstrained ? "text-red-500" : "text-white/40"
                 )}>
-                  {isConstrained && !overdue && <AlertCircle size={12} />}
+                  {isConstrained && !overdue && !isDueSoon && <AlertCircle size={12} />}
+                  {overdue && <AlertCircle size={12} />}
                   {dueText}
                 </span>
               )}

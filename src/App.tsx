@@ -5,16 +5,20 @@ import { TaskItem } from './components/TaskItem';
 import { PomodoroTimer } from './components/PomodoroTimer';
 import { AuthPage } from './components/AuthPage';
 import { SplashScreen } from './components/SplashScreen';
+import { SoundSettings } from './components/SoundSettings';
 import { useAuth } from './hooks/useAuth';
+import { useSoundSettings } from './hooks/useSoundSettings';
 import { Task } from './types';
 import { isTaskDueToday, isTaskOverdue } from './lib/taskUtils';
-import { Plus, ChevronDown, ChevronRight, AlertCircle, LogOut, UserCircle } from 'lucide-react';
+import { Plus, ChevronDown, ChevronRight, AlertCircle, LogOut, UserCircle, Settings } from 'lucide-react';
 import { differenceInDays, startOfDay, parseISO } from 'date-fns';
 import { motion, AnimatePresence } from 'motion/react';
 
 function MainApp({ isGuest }: { isGuest: boolean }) {
   const { user, signOut } = useAuth();
+  const { settings: soundSettings, updateSettings: updateSoundSettings } = useSoundSettings(user);
   const [showAuth, setShowAuth] = useState(false);
+  const [showSoundSettings, setShowSoundSettings] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const showToast = useCallback((msg: string) => {
     setToast(msg);
@@ -77,6 +81,13 @@ function MainApp({ isGuest }: { isGuest: boolean }) {
             <p className="text-white/50 font-mono text-sm">Minimalist To-Do System</p>
           </div>
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => setShowSoundSettings(!showSoundSettings)}
+              className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition text-white/50 hover:text-white"
+              title="Sound settings"
+            >
+              <Settings size={18} />
+            </button>
             {isGuest ? (
               <button
                 onClick={() => setShowAuth(true)}
@@ -104,6 +115,25 @@ function MainApp({ isGuest }: { isGuest: boolean }) {
         </header>
 
         <main className="space-y-16">
+          {/* Sound Settings Panel */}
+          <AnimatePresence>
+            {showSoundSettings && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
+                className="overflow-hidden mb-16"
+              >
+                <SoundSettings
+                  settings={soundSettings}
+                  onUpdateSettings={updateSoundSettings}
+                  onClose={() => setShowSoundSettings(false)}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* TODAY SECTION */}
           <section>
             <h2 className="text-sm font-mono text-white/50 mb-6 flex items-center gap-2">
