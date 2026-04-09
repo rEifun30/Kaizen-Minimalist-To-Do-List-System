@@ -64,9 +64,9 @@ export function playAlarmSound(): void {
   }
 }
 
-export function playTestSound(): void {
-  const settings = getSoundSettings();
-  if (!settings.enabled) return;
+export function playTestSound(settings?: SoundSettings): void {
+  const currentSettings = settings || getSoundSettings();
+  if (!currentSettings.enabled) return;
 
   if (!isInitialized) initializeSounds();
 
@@ -77,7 +77,7 @@ export function playTestSound(): void {
   }
 
   testAudio = new Audio('/assets/sounds/alarm.mp3');
-  testAudio.volume = VOLUME_MAP[settings.volumeLevel];
+  testAudio.volume = VOLUME_MAP[currentSettings.volumeLevel];
   testAudio.play().catch((err) => {
     console.warn('Test sound blocked by browser autoplay policy:', err.message);
   });

@@ -18,15 +18,15 @@ export function SoundSettings({ settings, onUpdateSettings, onClose }: SoundSett
 
     // Play test sound when enabling
     if (newEnabled) {
-      playTestSound();
+      playTestSound({ ...settings, enabled: true });
     }
   };
 
   const setVolume = (volume: VolumeLevel) => {
     onUpdateSettings({ volumeLevel: volume });
 
-    // Play test sound to demonstrate volume level (stops previous sound)
-    playTestSound();
+    // Play test sound with the new volume (pass settings directly to avoid stale localStorage read)
+    playTestSound({ ...settings, volumeLevel: volume });
   };
 
   return (
