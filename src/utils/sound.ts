@@ -58,8 +58,8 @@ export function playAlarmSound(): void {
   if (alarmAudio) {
     alarmAudio.volume = VOLUME_MAP[settings.volumeLevel];
     alarmAudio.currentTime = 0;
-    alarmAudio.play().catch(() => {
-      // Ignore autoplay errors (e.g., user hasn't interacted with page)
+    alarmAudio.play().catch((err) => {
+      console.warn('Alarm sound blocked by browser autoplay policy:', err.message);
     });
   }
 }
@@ -78,5 +78,7 @@ export function playTestSound(): void {
 
   testAudio = new Audio('/assets/sounds/alarm.mp3');
   testAudio.volume = VOLUME_MAP[settings.volumeLevel];
-  testAudio.play().catch(() => {});
+  testAudio.play().catch((err) => {
+    console.warn('Test sound blocked by browser autoplay policy:', err.message);
+  });
 }

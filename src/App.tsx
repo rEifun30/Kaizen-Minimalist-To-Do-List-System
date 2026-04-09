@@ -47,19 +47,21 @@ function MainApp({ isGuest }: { isGuest: boolean }) {
       }
     });
 
-    // Sort today tasks: Overdue -> Constraint -> High -> Medium -> Low -> Earliest deadline
+    // Sort today tasks: High -> Overdue -> Constraint -> Medium -> Low -> Earliest deadline
     today.sort((a, b) => {
+      // High priority always on top
+      if (a.priority === 'high' && b.priority !== 'high') return -1;
+      if (a.priority !== 'high' && b.priority === 'high') return 1;
+
+      // Within same priority group, overdue comes first
       if (isTaskOverdue(a) && !isTaskOverdue(b)) return -1;
       if (!isTaskOverdue(a) && isTaskOverdue(b)) return 1;
 
+      // Then constraint-flagged tasks
       if (a.constraintFlag && !b.constraintFlag) return -1;
       if (!a.constraintFlag && b.constraintFlag) return 1;
 
-      const priorityWeight = { high: 0, medium: 1, low: 2 };
-      if (priorityWeight[a.priority] !== priorityWeight[b.priority]) {
-        return priorityWeight[a.priority] - priorityWeight[b.priority];
-      }
-
+      // Then by deadline (earliest first)
       if (a.deadline && b.deadline) {
         return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
       }
